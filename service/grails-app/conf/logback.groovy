@@ -22,6 +22,9 @@ appender('STDOUT', ConsoleAppender) {
     }
 }
 
+logger ('mod.acbc', DEBUG)
+logger ('org.olf.acbc', DEBUG)
+
 def targetDir = BuildSettings.TARGET_DIR
 if (Environment.isDevelopmentMode() && targetDir != null) {
     appender("FULL_STACKTRACE", FileAppender) {

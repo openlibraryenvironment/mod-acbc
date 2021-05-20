@@ -20,6 +20,7 @@ apply plugin:"org.grails.plugins.views-json"
 
 repositories {
   maven { url "https://repo.grails.org/grails/core" }
+  maven { url 'https://maven.indexdata.com/' }
 }
 
 configurations {
@@ -30,6 +31,7 @@ configurations {
 }
 
 dependencies {
+  // profile deps
   developmentOnly("org.springframework.boot:spring-boot-devtools")
   compile "org.springframework.boot:spring-boot-starter-logging"
   compile "org.springframework.boot:spring-boot-autoconfigure"
@@ -45,7 +47,6 @@ dependencies {
   compile "org.grails:grails-plugin-databinding"
   compile "org.grails:grails-web-boot"
   compile "org.grails:grails-logging"
-  compile "org.grails.plugins:cache"
   compile "org.grails.plugins:async"
   compile "org.grails.plugins:events"
   compile "org.grails.plugins:hibernate5"
@@ -66,6 +67,11 @@ dependencies {
   testCompile "org.grails:grails-web-testing-support"
   testCompile "org.grails:views-json-testing-support"
   testCompile "org.hibernate.validator:hibernate-validator:6.0.20.Final"
+
+  // custom deps
+  compile "org.springframework.boot:spring-boot-starter-cache"
+  compile 'org.yaz4j:yaz4j:1.6.0'
+  compile 'com.github.ben-manes.caffeine:caffeine:3.0.2'
 }
 
 bootRun {
@@ -84,4 +90,8 @@ tasks.withType(GroovyCompile) {
   configure(groovyOptions) {
     forkOptions.jvmArgs = ['-Xmx1024m']
   }
+}
+
+springBoot {
+  mainClassName = 'mod.acbc.Application'
 }
