@@ -1,33 +1,22 @@
 package mod.acbc
 
+import grails.async.PromiseList
 import grails.rest.*
 import grails.converters.*
-import org.yaz4j.Connection
-import org.yaz4j.PrefixQuery
-import org.yaz4j.Record
-import org.yaz4j.ResultSet
-import org.yaz4j.exception.ZoomException
-import org.olf.acbc.AvailabilityService
+import org.olf.acbc.AvailabilityBroadcastService
 
 class AvailabilityController {
-  AvailabilityService availabilityService
-    
-	static responseFormats = ['json', 'xml']
-	
+
+  AvailabilityBroadcastService availabilityBroadcastService
+
+	static responseFormats = ['json']
+
     def getAvailability() {
       log.debug("invoked controller")
-      availabilityService.getAvailability()
-      availabilityService.getAvailability()
-      // // Connection con = new Connection("lx2.loc.gov/LCDB", 0)
-      // Connection con = new Connection("http://z3950.indexdata.com:210/gils", 0)
-      // // con.setSyntax("usmarc")
-      // con.connect()
-      // // ResultSet set = con.search(new PrefixQuery("@attr 1=7 0253333490"))
-      // ResultSet set = con.search(new PrefixQuery("mineral"))
-      // Record rec = set.getRecord(0)
-      // log.debug(rec.render())
-      // con.close()
+      def pending = availabilityBroadcastService.broadcast('someid', 300)
+      log.debug("broadcast promise: ${pending.get().toString()}")
       def result = [key: "value"]
+      log.debug("controller responding")
       render result as JSON
     }
 }

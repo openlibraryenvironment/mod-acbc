@@ -22,6 +22,6 @@ public class CachingConfig {
 
   def caffeineCacheBuilder() {
     return Caffeine.newBuilder()
-      .expireAfterWrite(2, TimeUnit.SECONDS)
+      .expireAfterWrite(5, TimeUnit.SECONDS)
   }
 }
